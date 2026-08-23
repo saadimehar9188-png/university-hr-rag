@@ -1,5 +1,9 @@
+from app.config.settings import APP_NAME, ENVIRONMENT
+
+
 def main():
-    print("University HR RAG Assistant")
+    print(f"Application: {APP_NAME}")
+    print(f"Environment: {ENVIRONMENT}")
 
 
 if __name__ == "__main__":
