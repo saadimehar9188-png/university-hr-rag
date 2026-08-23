@@ -2,11 +2,13 @@ from pathlib import Path
 
 import pymupdf
 
+from app.models.document import DocumentMetadata, DocumentPage
+
 
 class PDFLoader:
     """Load text content from a PDF document."""
 
-    def load(self, file_path: Path) -> list[dict]:
+    def load(self, file_path: Path) -> list[DocumentPage]:
         """Extract text from each page of a PDF."""
 
         if not file_path.exists():
@@ -26,13 +28,13 @@ class PDFLoader:
                 text = page.get_text("text").strip()
 
                 pages.append(
-                    {
-                        "text": text,
-                        "metadata": {
-                            "source": file_path.name,
-                            "pdf_page": page_number,
-                        },
-                    }
+                    DocumentPage(
+                        text=text,
+                        metadata=DocumentMetadata(
+                            source=file_path.name,
+                            pdf_page=page_number,
+                        ),
+                    )
                 )
 
         return pages

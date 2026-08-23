@@ -1,28 +1,28 @@
 import re
 
+from app.models.document import DocumentPage
+
 
 class DocumentCleaner:
-    """Clean extracted document text while preserving page metadata."""
+    """Clean extracted document text while preserving metadata."""
 
-    def clean(self, pages: list[dict]) -> list[dict]:
+    def clean(self, pages: list[DocumentPage]) -> list[DocumentPage]:
         """Clean the text of each extracted page."""
 
         cleaned_pages = []
 
         for page in pages:
-            text = page["text"]
-
-            text = self._normalize_whitespace(text)
+            text = self._normalize_whitespace(page.text)
             text = self._remove_empty_lines(text)
 
             if not text:
                 continue
 
             cleaned_pages.append(
-                {
-                    "text": text,
-                    "metadata": page["metadata"],
-                }
+                DocumentPage(
+                    text=text,
+                    metadata=page.metadata,
+                )
             )
 
         return cleaned_pages

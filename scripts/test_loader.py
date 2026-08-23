@@ -15,8 +15,8 @@ def main():
 
     for page in pages[:3]:
         print("-" * 60)
-        print(f"PDF page: {page['metadata']['pdf_page']}")
-        print(page["text"][:500])
+        print(f"PDF page: {page.metadata.pdf_page}")
+        print(page.text[:500])
 
 
 if __name__ == "__main__":
