@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from app.ingestion.cleaner import DocumentCleaner
 from app.ingestion.loader import PDFLoader
 
 
@@ -11,9 +12,13 @@ def main():
     loader = PDFLoader()
     pages = loader.load(document_path)
 
-    print(f"Pages loaded: {len(pages)}")
+    cleaner = DocumentCleaner()
+    cleaned_pages = cleaner.clean(pages)
 
-    for page in pages[:3]:
+    print(f"Pages before cleaning: {len(pages)}")
+    print(f"Pages after cleaning: {len(cleaned_pages)}")
+
+    for page in cleaned_pages[:3]:
         print("-" * 60)
         print(f"PDF page: {page['metadata']['pdf_page']}")
         print(page["text"][:500])
